@@ -1,0 +1,4 @@
+services:
+  #@include ./services/nginx
+  #@slot:volume ./local/volume:/usr/app
+  #@include ./services/database

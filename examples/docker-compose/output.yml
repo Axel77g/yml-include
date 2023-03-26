@@ -1,0 +1,9 @@
+services:
+  web:
+    image: nginx
+    command: [nginx-debug, "-g", "daemon off;"]
+    volume:
+      -  ./local/volume:/usr/app
+
+  database:
+    image: mysql

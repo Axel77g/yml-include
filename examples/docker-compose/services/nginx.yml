@@ -1,0 +1,5 @@
+web:
+  image: nginx
+  command: [nginx-debug, "-g", "daemon off;"]
+  volume:
+    -  #@slot:volume
