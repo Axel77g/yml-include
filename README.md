@@ -33,6 +33,15 @@ You can add the `--watch` parameter to make yml-include rebuild when saving an i
 npx yml-include <entry_file.yml> <dist_file.yml> --watch
 ```
 
+Or you can defined a script in your `package.json` to run `npm run <your_script_name>`
+
+```json
+  "scripts":{
+    "build-yml": "yml-include <entry_file.yml> <dist_file.yml>"
+    "watch-yml": "yml-include <entry_file.yml> <dist_file.yml> --watch"
+  }
+```
+
 ## Syntaxes
 
 There are two syntaxes specific to the yml-include library
