@@ -22,7 +22,7 @@ npm install yml-include -D
 Once installed yml-include is used with this single command
 
 ```bash
-npm run yml-include <entry_file.yml> <dist_file.yml>
+npx yml-include <entry_file.yml> <dist_file.yml>
 ```
 
 This will start a build of your YAML files
@@ -30,7 +30,7 @@ This will start a build of your YAML files
 You can add the `--watch` parameter to make yml-include rebuild when saving an include file
 
 ```bash
-npm run yml-include <entry_file.yml> <dist_file.yml> --watch
+npx yml-include <entry_file.yml> <dist_file.yml> --watch
 ```
 
 ## Syntaxes
