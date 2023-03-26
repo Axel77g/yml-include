@@ -7,7 +7,7 @@
 
 # YML-INCLUDE
 
-The yml-include library is a simple and efficient solution for developers working with YAML files. It allows for easy management of YAML file inclusions, which simplifies configuration management and reuse of code fragments.
+The yml-include library is a simple and efficient solution for developers working with YAML files. It allows easy management of YAML file inclusions, which simplifies configuration management and reuse of code fragments.
 
 ## Getting started
 
