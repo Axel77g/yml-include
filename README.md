@@ -116,4 +116,19 @@ services:
     image: nginx:latest
 ```
 
-This allows you to create some kind of reusable yml component.
+This allows you to create some kind of reusable YAML component.
+
+## Features
+
+### Error Management
+
+In case of error on imported files, the script shows you the line and the file concerned by the erroneous include
+
+### File Caching
+
+The purpose of this script is to simplify the writing of large YAML files by allowing multiple use of the same include from the same or another file. The script caches all open files to preserve access to your hard disk.
+
+### In the futur
+
+- Prevent from circular include cause infinit loop
+- Add warning about syntax close to basic yml-include syntax (#@)
