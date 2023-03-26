@@ -27,7 +27,7 @@ npx yml-include <entry_file.yml> <dist_file.yml>
 
 This will start a build of your YAML files
 
-You can add the `--watch` parameter to make yml-include rebuild when saving an include file
+You can add the `--watch` parameter to make yml-include rebuild when saving an included file
 
 ```bash
 npx yml-include <entry_file.yml> <dist_file.yml> --watch
