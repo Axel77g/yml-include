@@ -1,0 +1,19 @@
+{
+  "name": "yaml-include",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "The yml-include library is a simple and efficient solution for developers working with YAML files. It allows you to easily manage YAML file inclusions, which simplifies configuration management and reuse of code fragments. Easy to use and can be integrated into your Node.js projects in just a few minu",
+  "main": "src/main.js",
+  "author": "Axel <axel77g@hotmail.com>",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "build-example-docker": "node ./src/main.js ./examples/docker-compose/entry.yml ./examples/docker-compose/output.yml",
+    "watch-example-docker": "node ./src/main.js ./examples/docker-compose/entry.yml ./examples/docker-compose/output.yml --watch",
+    "build-example-swagger": "node ./src/main.js ./examples/swagger/entry.yml ./examples/swagger/output.yml",
+    "watch-example-swagger": "node ./src/main.js ./examples/swagger/entry.yml ./examples/swagger/output.yml --watch"
+  },
+  "bin": {
+    "yaml-include": "./src/main.js"
+  }
+}
