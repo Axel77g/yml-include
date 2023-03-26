@@ -1,5 +1,5 @@
 {
-  "name": "yml-include",
+  "name": "node-yml-include",
   "type": "module",
   "version": "1.0.0",
   "description": "The yml-include library is a simple and efficient solution for developers working with YAML files. It allows you to easily manage YAML file inclusions, which simplifies configuration management and reuse of code fragments. Easy to use and can be integrated into your Node.js projects in just a few minu",
@@ -13,7 +13,7 @@
     "watch-example-swagger": "node ./src/main.js ./examples/swagger/entry.yml ./examples/swagger/output.yml --watch"
   },
   "bin": {
-    "yaml-include": "src/main.js"
+    "yml-include": "src/main.js"
   },
   "directories": {
     "example": "examples"
