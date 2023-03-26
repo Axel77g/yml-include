@@ -2,6 +2,7 @@ import regexConf from "./config/regex.js";
 import fs from "fs";
 import path from "path";
 import { BuildError } from "./error/BuildError.js";
+import { apply } from "./utils/ConsoleColor.js";
 
 export class Include {
   constructor([_, leadingSpace, path], index, builder, parent = null) {
@@ -21,6 +22,7 @@ export class Include {
 
     this.resolveSlots();
     this.resolveSubIncludes();
+    this.findWarningSyntax();
   }
 
   get dirPath() {
@@ -36,6 +38,12 @@ export class Include {
 
   get includeFile() {
     return this.builder.files.get(this.filePath).content;
+  }
+
+  get cleanIncludeFile() {
+    let regex = regexConf.supportedSyntax;
+    let cleanIncludeFile = this.includeFile.replace(regex, "");
+    return cleanIncludeFile;
   }
 
   get isPathExist() {
@@ -85,17 +93,30 @@ export class Include {
     }
   }
 
+  findWarningSyntax() {
+    const regex = regexConf.warningSyntax;
+    let match;
+    while ((match = regex.exec(this.cleanIncludeFile))) {
+      console.log(
+        apply(["bg.yellow", "bright"], " WARNING ") +
+          ` Syntax ${match[0]} is not supported in ${this.filePath}`
+      );
+    }
+  }
+
   include() {
     let resStr = this.includeFile;
     this.builder.watcher.watch(this.filePath);
 
     this.subInclude.forEach((include) => {
       let res = include.include();
-      resStr = resStr.replace(new RegExp(`^${include._}$`, "m"), res);
+      let r = new RegExp(`^${include._}$(\n[ ]{0,}#@slot.*)*`, "m");
+      resStr = resStr.replace(r, res);
     });
 
     this.slots.forEach((slot) => (resStr = slot.exec(resStr)));
     resStr = resStr.replace(/\n/g, `\n${this.leadingSpace}`);
+
     return (this.leadingSpace + resStr).trimEnd();
   }
 }

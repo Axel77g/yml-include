@@ -20,7 +20,7 @@ export class Builder {
   get currentIncludes() {}
 
   run() {
-    //clea console
+    //clean files cache
     const start = performance.now();
     this.files.clear();
     try {
@@ -32,7 +32,7 @@ export class Builder {
       );
 
       let res = include.include(0, 0);
-      res = res.replace(/([ ]{0,})(?<!\")#(.+)/gi, "");
+
       fs.writeFileSync(this.distPath, res, "utf8");
 
       const end = performance.now();
