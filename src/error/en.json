@@ -1,5 +1,8 @@
 {
   "INCLUDED_NOT_FOUND": {
     "message": "The included file was not found"
+  },
+  "CIRCULAR_INCLUDE": {
+    "message": "Circular include detected"
   }
 }
