@@ -23,6 +23,16 @@ export class Include {
     this.resolveSubIncludes();
   }
 
+  get filePathParents() {
+    let parents = [];
+    let parent = this.parent;
+    while (parent) {
+      parents.push(parent.filePath);
+      parent = parent.parent;
+    }
+    return parents.reverse();
+  }
+
   get dirPath() {
     return path.resolve(this.filePath, "..");
   }
@@ -73,6 +83,15 @@ export class Include {
           match.index,
           this.filePath
         );
+
+      if (this.filePathParents.includes(newRelativePath + ".yml")) {
+        throw new BuildError(
+          "CIRCULAR_INCLUDE",
+          this.includeFile,
+          match.index,
+          this.filePath
+        );
+      }
 
       this.subInclude.push(
         new Include(
