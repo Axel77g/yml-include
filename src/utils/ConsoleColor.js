@@ -34,7 +34,7 @@ export function apply(rules = [], str) {
   if (typeof rules === "string") rules = [rules];
   let prefix = "";
   rules.forEach((rule) => {
-    prefix += eval("consoleColors." + rule);
+    prefix += Object.nestedKey(consoleColors, rule);
   });
   return prefix + str + consoleColors.reset;
 }
