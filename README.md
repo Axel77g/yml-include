@@ -128,7 +128,10 @@ In case of error on imported files, the script shows you the line and the file c
 
 The purpose of this script is to simplify the writing of large YAML files by allowing multiple use of the same include from the same or another file. The script caches all open files to preserve access to your hard disk.
 
-### In the futur
+### Prevent circular include
 
-- Prevent from circular include cause infinit loop
-- Add warning about syntax close to basic yml-include syntax (#@)
+The script detects and prevents circular includes, which can cause infinite loops and crashes.
+
+### Warning syntax
+
+The script warns you when it detects a syntax close to basic yml-include syntax (#@). This is to help prevent errors in your code due to similar but slightly different syntax.
