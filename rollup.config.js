@@ -1,5 +1,4 @@
 import json from "@rollup/plugin-json";
-import terser from "@rollup/plugin-terser";
 
 export default {
   input: "src/main.js",
@@ -7,5 +6,5 @@ export default {
     file: "dist/yml-include.min.js",
     format: "module",
   },
-  plugins: [json(), terser()],
+  plugins: [json()],
 };
