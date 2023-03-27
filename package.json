@@ -10,7 +10,8 @@
     "build-example-docker": "node ./src/main.js ./examples/docker-compose/entry.yml ./examples/docker-compose/output.yml",
     "watch-example-docker": "node ./src/main.js ./examples/docker-compose/entry.yml ./examples/docker-compose/output.yml --watch",
     "build-example-swagger": "node ./src/main.js ./examples/swagger/entry.yml ./examples/swagger/output.yml",
-    "watch-example-swagger": "node ./src/main.js ./examples/swagger/entry.yml ./examples/swagger/output.yml --watch"
+    "watch-example-swagger": "node ./src/main.js ./examples/swagger/entry.yml ./examples/swagger/output.yml --watch",
+    "build": "rollup -c"
   },
   "bin": {
     "yml-include": "src/main.js"
@@ -18,7 +19,6 @@
   "directories": {
     "example": "examples"
   },
-  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Axel77g/yml-include.git"
@@ -26,5 +26,10 @@
   "bugs": {
     "url": "https://github.com/Axel77g/yml-include/issues"
   },
-  "homepage": "https://github.com/Axel77g/yml-include#readme"
+  "homepage": "https://github.com/Axel77g/yml-include#readme",
+  "devDependencies": {
+    "@rollup/plugin-json": "^6.0.0",
+    "@rollup/plugin-terser": "^0.4.0",
+    "rollup": "^3.20.2"
+  }
 }
