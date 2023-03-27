@@ -2,6 +2,7 @@ import regexConf from "./config/regex.js";
 import fs from "fs";
 import path from "path";
 import { BuildError } from "./error/BuildError.js";
+import { apply } from "./utils/ConsoleColor.js";
 
 export class Include {
   constructor([_, leadingSpace, path], index, builder, parent = null) {
@@ -21,6 +22,11 @@ export class Include {
 
     this.resolveSlots();
     this.resolveSubIncludes();
+    this.findWarningSyntax();
+  }
+
+  get slotsTofill() {
+    return this.includeFile.match(regexConf.slotIncludeSide);
   }
 
   get dirPath() {
@@ -38,6 +44,12 @@ export class Include {
     return this.builder.files.get(this.filePath).content;
   }
 
+  get cleanIncludeFile() {
+    let regex = regexConf.supportedSyntax;
+    let cleanIncludeFile = this.includeFile.replace(regex, "");
+    return cleanIncludeFile;
+  }
+
   get isPathExist() {
     return fs.existsSync(this.filePath);
   }
@@ -53,7 +65,7 @@ export class Include {
     for (let i = 0; i < linesAfter.length; i++) {
       match = regex.exec(linesAfter[i]);
 
-      if (match) this.slots.push(new Slot(match, match.index));
+      if (match) this.slots.push(new Slot(match, match.index, this));
       else break;
     }
   }
@@ -85,29 +97,65 @@ export class Include {
     }
   }
 
+  findWarningSyntax() {
+    const regex = regexConf.warningSyntax;
+    let match;
+    while ((match = regex.exec(this.cleanIncludeFile))) {
+      console.log(
+        apply(["bg.yellow", "bright"], " WARNING ") +
+          ` Syntax ${match[0]} is not supported in ${this.filePath}`
+      );
+    }
+    if (!this.parent) return;
+    this.slotsTofill?.forEach((slotIdentifier) => {
+      if (!this.slots.some((slot) => slot.identifier === slotIdentifier)) {
+        console.log(
+          apply(["bg.yellow", "bright"], " WARNING ") +
+            ` Slot ${slotIdentifier} is not filled in ${this.filePath} in ${this.parent.filePath}`
+        );
+      }
+    });
+  }
+
   include() {
     let resStr = this.includeFile;
     this.builder.watcher.watch(this.filePath);
 
     this.subInclude.forEach((include) => {
       let res = include.include();
-      resStr = resStr.replace(new RegExp(`^${include._}$`, "m"), res);
+      let r = new RegExp(`^${include._}$(\n[ ]{0,}#@slot.*)*`, "m");
+      resStr = resStr.replace(r, res);
     });
 
     this.slots.forEach((slot) => (resStr = slot.exec(resStr)));
     resStr = resStr.replace(/\n/g, `\n${this.leadingSpace}`);
+
     return (this.leadingSpace + resStr).trimEnd();
   }
 }
 
 export class Slot {
-  constructor([_, leadingSpace, slotIdentifier, value], index) {
+  constructor([_, leadingSpace, slotIdentifier, value], index, include) {
+    /**
+     * @type {Include}
+     */
+    this.include = include;
     this._ = _;
     this.index = index;
     this.identifier = slotIdentifier;
     this.value = value;
     this.leadingSpace = leadingSpace;
     this.slots = [];
+
+    if (!this.isUse())
+      console.log(
+        apply(["bg.yellow", "bright"], " WARNING ") +
+          ` Slot ${this.identifier} is not used in ${this.include.filePath}`
+      );
+  }
+
+  isUse() {
+    return this.include.includeFile.indexOf(this.identifier) > -1;
   }
 
   exec(data) {
