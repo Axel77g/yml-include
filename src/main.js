@@ -2,6 +2,22 @@
 import path from "path";
 import { Builder } from "./Builder.js";
 
+Object.nestedKey = (obj, key) => {
+  const keys = key.split(".");
+  const firstKey = keys[0];
+  const remainingKeys = keys.slice(1);
+
+  if (remainingKeys.length === 0) {
+    return obj[firstKey];
+  }
+
+  if (obj[firstKey] === undefined) {
+    return undefined;
+  }
+
+  return Object.nestedKey(obj[firstKey], remainingKeys.join("."));
+};
+
 const rootPath = process.cwd();
 
 (async () => {
